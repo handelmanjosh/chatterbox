@@ -249,6 +249,7 @@ func TestOneWayChat(t *testing.T) {
 
 	alice := NewChatter()
 	bob := NewChatter()
+
 	SkipOnError(t, DoHandshake(t, alice, bob))
 
 	if VERBOSE {
@@ -308,13 +309,11 @@ func TestErrorRecovery(t *testing.T) {
 		t.Fatal("Did not raise error for modified sequence number")
 	}
 	message.Counter -= 1
-
 	message.Ciphertext[4] ^= 0x10
 	if _, err = bob.ReceiveMessage(message); err == nil {
 		t.Fatal("Did not raise error for modified ciphertext")
 	}
 	message.Ciphertext[4] ^= 0x10
-
 	FailOnError(t, CheckReceive(t, bob, message, "test"))
 }
 
@@ -630,7 +629,6 @@ func DeliverQueuedMessage(t *testing.T,
 // many message delayed and delivered out of order. No delivery errors occur.
 // If the setup fails, the test is skipped.
 func TestAsynchronousChat(t *testing.T) {
-
 	alice := NewChatter()
 	bob := NewChatter()
 	SkipOnError(t, DoHandshake(t, alice, bob))
