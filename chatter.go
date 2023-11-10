@@ -234,7 +234,7 @@ func (c *Chatter) SendMessage(partnerIdentity *PublicKey,
 		return nil, errors.New("Can't send message to partner with no open session")
 	}
 	session := c.Sessions[*partnerIdentity]
-	if c.NewSender { //ga2, a2
+	if c.NewSender {
 		session.LastUpdate = session.SendCounter
 		session.MyDHRatchet = GenerateKeyPair()
 		newRatchet := DHCombine(session.PartnerDHRatchet, &session.MyDHRatchet.PrivateKey)
